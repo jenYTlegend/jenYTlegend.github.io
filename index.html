@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料提交</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>資料提交</h1>
+    <form id="dataForm">
+        <label for="userId">Discord 使用者 ID:</label>
+        <input type="text" id="userId" required><br>
+        <label for="message">訊息:</label>
+        <textarea id="message" required></textarea><br>
+        <button type="submit">提交</button>
+    </form>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userId = document.getElementById('userId').value;
+            const message = document.getElementById('message').value;
+
+            fetch('https://yourserver.com/send-message', { // 用你的後端伺服器 URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('訊息已送出');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
